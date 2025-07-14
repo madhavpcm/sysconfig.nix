@@ -13,24 +13,63 @@
     inputs.common.nixosModules.common-cpu-amd
     inputs.hardware.nixosModules.common-gpu-amd
     inputs.hardware.nixosModules.common-pc-ssd
+    inputs.stylix.nixosModules.stylix
+    (map lib.custom.relativeToRoot [
+      # ========== Required Configs ==========
+      "hosts/common/core"
+      # ========== Optional Configs ==========
+      "hosts/common/opt/services/bluetooth.nix" # pipewire and cli controls
+      "hosts/common/opt/audio.nix" # pipewire and cli controls
+      "hosts/common/opt/gaming.nix" # steam, gamescope, gamemode, and related hardware
+      "hosts/common/opt/hyprland.nix" # window manager
+      "hosts/common/opt/vpn.nix" # vpn
+      "hosts/common/opt/vlc.nix" # media player
+      "hosts/common/opt/wayland-tools.nix" # wayland components and pkgs not available in home-manager
+    ])
   ];
+  hostSpec = {
+    hostName = "zenhammer";
+    useYubikey = lib.mkForce true;
+    hdr = lib.mkForce true;
+    persistFolder =
+      "/persist"; # added for "completion" because of the disko spec that was used even though impermanence isn't actually enabled here yet.
+  };
 
   # Use the systemd-boot EFI boot loader.
   boot = {
-    efi.efiSysMountPoint = "/boot";
     loader = {
       efi = {
-        efi.canTouchEfiVariables = true;
-        efi.efiSysMountPoint = "/boot";
+        canTouchEfiVariables = true;
+        efiSysMountPoint = "/boot";
       };
-      systemd-boot.enable = true;
+      systemd-boot = {
+        enable = true;
+        configurationLimit = lib.mkDefault 7;
+      };
+      initrd = { systemd.enable = true; };
     };
+  };
+
+  stylix = {
+    enable = true;
+    image = (lib.custom.relativeToRoot "assets/wallpapers/zen-01.png");
+    base16Scheme =
+      "${pkgs.base16-schemes}/share/themes/gruvbox-dark-medium.yaml";
+    opacity = {
+      applications = 1.0;
+      terminal = 1.0;
+      desktop = 1.0;
+      popups = 0.8;
+    };
+    polarity = "dark";
+    # program specific exclusions
+    #targets.foo.enable = false;
   };
   environment.systemPackages = with pkgs;
     import ./sys-packages.nix { inherit pkgs; };
 
   networking = {
-    hostName = "nixos-zenhammer"; # Define your hostname.
+    hostName = "zenhammer"; # Define your hostname.
     networkmanager.enable = true;
     firewall.enable = true;
   };
@@ -71,6 +110,12 @@
         			'';
     };
   };
+  hardware.graphics.enable = true;
+  #hardware.graphics.package = lib.mkForce pkgs.unstable.mesa.drivers;
+  hardware.amdgpu.initrd.enable = true; # load amdgpu kernelModules in stage 1.
+  hardware.amdgpu.opencl.enable =
+    true; # OpenCL support - general compute API for gpu
+  hardware.amdgpu.amdvlk.enable = true; # additional, alternative drivers
 
   users.users.madhavpcm = {
     isNormalUser = true;
@@ -78,7 +123,6 @@
     packages = with pkgs; [ tree curl git ];
   };
 
-  programs.firefox.enable = true;
   programs.dconf.profiles.user.databases = [{
     lockAll = true;
     settings = {
