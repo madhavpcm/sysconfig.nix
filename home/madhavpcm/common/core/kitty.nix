@@ -32,13 +32,6 @@
 
       # FIXME(git): At the moment this requires personal and work sets to maintain lists of git servers, even if
       # unneeded, so could also check if domain list actually exists in the set first.
-      alwaysSshRepos = lib.foldl' lib.recursiveUpdate { } (lib.concatLists
-        (lib.map (domain:
-          insteadOfList domain (privateRepos.${domain}
-            ++ (lib.optionals config.hostSpec.isWork
-              privateWorkRepos.${domain}))) (lib.attrNames privateRepos
-                ++ lib.optionals config.hostSpec.isWork
-                (lib.attrNames privateWorkRepos))));
     in {
       core.pager = "delta";
       delta = {
@@ -50,12 +43,6 @@
           "line-numbers"
           "commit-decoration"
         ];
-      };
-
-      url = alwaysSshRepos // lib.optionalAttrs (!config.hostSpec.isMinimal) {
-        # Only force ssh if it's not minimal
-        "ssh://git@github.com" = { pushInsteadOf = "https://github.com"; };
-        "ssh://git@gitlab.com" = { pushInsteadOf = "https://gitlab.com"; };
       };
 
       # pre-emptively ignore mac crap

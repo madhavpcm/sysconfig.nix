@@ -62,17 +62,17 @@
       # Overlays: modifications/overrides to upstream packages
       overlays = import ./overlays { inherit inputs; };
 
-      # Packages: expose packages externally
-      packages = forAllSystems (system:
-        let
-          pkgs = import nixpkgs {
-            inherit system;
-            overlays = [ self.overlays.default ];
-          };
-        in nixpkgs.lib.packagesFromDirectoryRecursive {
-          callPackage = nixpkgs.lib.callPackageWith pkgs;
-          directory = ./pkgs/common;
-        });
+      ## Packages: expose packages externally
+      #packages = forAllSystems (system:
+      #  let
+      #    pkgs = import nixpkgs {
+      #      inherit system;
+      #      overlays = [ self.overlays.default ];
+      #    };
+      #  in nixpkgs.lib.packagesFromDirectoryRecursive {
+      #    callPackage = nixpkgs.lib.callPackageWith pkgs;
+      #    directory = ./pkgs/common;
+      #  });
 
       # Formatter: nix fmt
       formatter = forAllSystems
