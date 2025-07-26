@@ -21,7 +21,9 @@ in {
   hostSpec = {
     username = "madhavpcm";
     handle = "madhavpcm";
-    inherit (inputs.nix-secrets) domain email userFullName networking;
+    domain = "";
+    email = "dpmadhav@hotmail.com";
+    userFullName = "Madhav Prabhu";
   };
 
   networking.hostName = config.hostSpec.hostName;

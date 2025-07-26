@@ -97,7 +97,7 @@ in {
 
       #------------Nix src navigation------------
       cnc = "cd ${devNix}/nix-config";
-      cns = "cd ${devNix}/nix-secrets";
+      # cns = "cd ${devNix}/nix-secrets";
       cnh = "cd ${devNix}/nixos-hardware";
       cnp = "cd ${devNix}/nixpkgs";
 

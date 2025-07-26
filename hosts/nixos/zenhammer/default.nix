@@ -46,7 +46,6 @@
         enable = true;
         configurationLimit = lib.mkDefault 7;
       };
-      initrd = { systemd.enable = true; };
     };
   };
 

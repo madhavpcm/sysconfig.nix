@@ -21,8 +21,6 @@
     # for things that don't need it. So I have to hardcode repos that require auth, and default to ssh for
     # actions that require auth.
     extraConfig = let
-      privateRepos = inputs.nix-secrets.git.repos;
-      privateWorkRepos = inputs.nix-secrets.git.work.repos;
       insteadOfList = domain: urls:
         lib.map (url: {
           "ssh://git@${domain}/${url}" = {
