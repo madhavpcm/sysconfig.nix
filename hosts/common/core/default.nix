@@ -6,18 +6,12 @@ let
 in {
   imports = lib.flatten [
     inputs.home-manager.${platformModules}.home-manager
-    inputs.sops-nix.${platformModules}.sops
 
     (map lib.custom.relativeToRoot [
-      "modules/common"
-      "modules/hosts/common"
-      "modules/hosts/${platform}"
       "hosts/common/core/${platform}.nix"
-      "hosts/common/core/sops.nix" # Core because it's used for backups, mail
-      "hosts/common/core/ssh.nix"
       #"hosts/common/core/services" #not used yet
-      "hosts/common/users/primary"
-      "hosts/common/users/primary/${platform}.nix"
+      "hosts/common/users/god/"
+      "hosts/common/users/god/${platform}.nix"
     ])
   ];
 
