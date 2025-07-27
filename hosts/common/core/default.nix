@@ -1,7 +1,8 @@
 # IMPORTANT: This is used by NixOS and nix-darwin so options must exist in both!
 { inputs, outputs, config, lib, pkgs, isDarwin, ... }:
 let
-  platform = if isDarwin then "darwin" else "nixos";
+  #platform = if isDarwin then "darwin" else "nixos";
+  platform = "nixos";
   platformModules = "${platform}Modules";
 in {
   imports = lib.flatten [
@@ -12,6 +13,7 @@ in {
       #"hosts/common/core/services" #not used yet
       "hosts/common/users/god/"
       "hosts/common/users/god/${platform}.nix"
+      "modules/common/"
     ])
   ];
 

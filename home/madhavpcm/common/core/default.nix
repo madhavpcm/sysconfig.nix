@@ -1,7 +1,8 @@
 # FIXME: Move attrs that will only work on linux to nixos.nix
 #FIXME: if pulling in homemanager for isMinimal maybe set up conditional for some packages
 { config, lib, pkgs, hostSpec, ... }:
-let platform = if hostSpec.isDarwin then "darwin" else "nixos";
+#let platform = if hostSpec.isDarwin then "darwin" else "nixos";
+let platform = "nixos";
 in {
   imports = lib.flatten [
     (map lib.custom.relativeToRoot [
