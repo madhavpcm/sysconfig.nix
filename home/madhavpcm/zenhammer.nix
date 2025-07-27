@@ -3,12 +3,10 @@
     common/core
 
     common/opt/browsers
-    common/opt/desktops # default is hyprland
     common/opt/dev
     common/opt/comms
     common/opt/gaming
     common/opt/media
-    common/opt/tools
 
     common/opt/xdg.nix # file associations
   ];
@@ -21,6 +19,7 @@
     width = 3840;
     height = 2160;
     refreshRate = 60;
+    primary = true;
     x = 0;
   }];
 }

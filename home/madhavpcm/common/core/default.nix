@@ -12,13 +12,11 @@ in {
     ./zsh
     ./bash.nix
     ./bat.nix
-    ./btop.nix
     ./direnv.nix
     ./fonts.nix
     ./git.nix
     ./kitty.nix
     ./screen.nix
-    ./ssh.nix
     ./zoxide.nix
   ];
 
@@ -29,7 +27,7 @@ in {
   home = {
     username = lib.mkDefault config.hostSpec.username;
     homeDirectory = lib.mkDefault config.hostSpec.home;
-    stateVersion = lib.mkDefault "23.05";
+    stateVersion = lib.mkDefault "25.05";
     sessionPath = [ "$HOME/.local/bin" "$HOME/scripts/talon_scripts" ];
     sessionVariables = {
       FLAKE = "$HOME/src/nix/nix-config";
@@ -38,7 +36,6 @@ in {
       TERMINAL = "kitty";
       VISUAL = "nvim";
       EDITOR = "nvim";
-      MANPAGER = "batman"; # see ./cli/bat.nix
     };
     preferXdgDirectories =
       true; # whether to make programs use XDG directories whenever supported
@@ -52,7 +49,7 @@ in {
       enable = true;
       createDirectories = true;
       desktop = "${config.home.homeDirectory}/.desktop";
-      documents = "${config.home.homeDirectory}/doc";
+      documents = "${config.home.homeDirectory}/docs";
       download = "${config.home.homeDirectory}/downloads";
       music = "${config.home.homeDirectory}/media/audio";
       pictures = "${config.home.homeDirectory}/media/images";
@@ -120,7 +117,6 @@ in {
   in [ jq5 ] ++ builtins.attrValues {
     inherit (pkgs)
 
-    # Packages that don't have custom configs go here
       copyq # clipboard manager
       coreutils # basic gnu utils
       curl eza # ls replacement

@@ -29,7 +29,7 @@
   ];
   hostSpec = {
     hostName = "zenhammer";
-    useYubikey = lib.mkForce true;
+    # useYubikey = lib.mkForce true;
     hdr = lib.mkForce true;
     persistFolder =
       "/persist"; # added for "completion" because of the disko spec that was used even though impermanence isn't actually enabled here yet.
@@ -51,7 +51,7 @@
 
   stylix = {
     enable = true;
-    image = (lib.custom.relativeToRoot "assets/wallpapers/zen-01.png");
+    #image = (lib.custom.relativeToRoot "assets/wallpapers/zen-01.png");
     base16Scheme =
       "${pkgs.base16-schemes}/share/themes/gruvbox-dark-medium.yaml";
     opacity = {

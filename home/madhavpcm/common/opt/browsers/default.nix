@@ -1,5 +1,2 @@
-{ pkgs, ... }: {
-  imports =
-    [ (import ./zen.nix { inherit pkgs; }) ./chromium.nix ./firefox.nix ];
-}
+{ pkgs, ... }: { imports = [ ./chromium.nix ./firefox.nix ]; }
 

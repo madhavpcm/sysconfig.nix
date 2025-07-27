@@ -1,46 +1,61 @@
-# User config applicable to both nixos and darwin
-{ inputs, pkgs, config, lib, ... }:
+# User config applicable only to nixos
+{ inputs, config, lib, pkgs, ... }:
 let
   hostSpec = config.hostSpec;
-  pubKeys = lib.filesystem.listFilesRecursive ./keys;
-in {
-  users.users.${hostSpec.username} = {
-    name = hostSpec.username;
-    shell = pkgs.zsh; # default shell
+  ifTheyExist = groups:
+    builtins.filter (group: builtins.hasAttr group config.users.groups) groups;
 
-    # These get placed into /etc/ssh/authorized_keys.d/<name> on nixos
-    openssh.authorizedKeys.keys =
-      lib.lists.forEach pubKeys (key: builtins.readFile key);
+  # Decrypt password to /run/secrets-for-users/ so it can be used to create the user
+  sopsHashedPasswordFile = lib.optionalString (!config.hostSpec.isMinimal)
+    config.sops.secrets."passwords/${hostSpec.username}".path;
+in {
+  users.mutableUsers =
+    false; # Only allow declarative credentials; Required for password to be set via sops during system activation!
+  users.users.${hostSpec.username} = {
+    home = "/home/${hostSpec.username}";
+    isNormalUser = true;
+    hashedPasswordFile = sopsHashedPasswordFile; # Blank if sops is not working.
+
+    extraGroups = lib.flatten [
+      "wheel"
+      (ifTheyExist [
+        "audio"
+        "video"
+        "docker"
+        "git"
+        "networkmanager"
+        "scanner" # for print/scan"
+        "lp" # for print/scan"
+      ])
+    ];
   };
 
-  # Create ssh sockets directory for controlpaths when homemanager not loaded (i.e. isMinimal)
-  systemd.tmpfiles.rules = let
-    user = config.users.users.${hostSpec.username}.name;
-    group = config.users.users.${hostSpec.username}.group;
-    # you must set the rule for .ssh separately first, otherwise it will be automatically created as root:root and .ssh/sockects will fail
-  in [
-    "d /home/${hostSpec.username}/.ssh 0750 ${user} ${group} -"
-    "d /home/${hostSpec.username}/.ssh/sockets 0750 ${user} ${group} -"
-  ];
+  # No matter what environment we are in we want these tools for root, and the user(s)
+  programs.git.enable = true;
 
-  # No matter what environment we are in we want these tools
-  programs.zsh.enable = true;
-  environment.systemPackages = [ pkgs.just pkgs.rsync ];
-}
-# Import the user's personal/home configurations, unless the environment is minimal
-// lib.optionalAttrs (inputs ? "home-manager") {
-  home-manager = {
-    extraSpecialArgs = {
-      inherit pkgs inputs;
-      hostSpec = config.hostSpec;
+  # root's ssh key are mainly used for remote deployment, borg, and some other specific ops
+  users.users.root = {
+    shell = pkgs.zsh;
+    hashedPasswordFile =
+      config.users.users.${hostSpec.username}.hashedPasswordFile;
+    hashedPassword =
+      config.users.users.${hostSpec.username}.hashedPassword; # This comes from hosts/common/optional/minimal.nix and gets overridden if sops is working
+    openssh.authorizedKeys.keys =
+      config.users.users.${hostSpec.username}.openssh.authorizedKeys.keys; # root's ssh keys are mainly used for remote deployment.
+  };
+} // lib.optionalAttrs (inputs ? "home-manager") {
+
+  # Setup p10k.zsh for root
+  home-manager.users.root = lib.optionalAttrs (!hostSpec.isMinimal) {
+    home.stateVersion = "25.05"; # Avoid error
+    programs.zsh = {
+      enable = true;
+      plugins = [{
+        name = "powerlevel10k-config";
+        src = lib.custom.relativeToRoot
+          "home/${hostSpec.username}/common/core/zsh/p10k";
+        file = "p10k.zsh";
+      }];
     };
-    users.${hostSpec.username}.imports = lib.flatten
-      (lib.optional (!hostSpec.isMinimal) [
-        ({ config, ... }:
-          import (lib.custom.relativeToRoot
-            "home/${hostSpec.username}/${hostSpec.hostName}.nix") {
-              inherit pkgs inputs config lib hostSpec;
-            })
-      ]);
   };
 }
