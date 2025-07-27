@@ -1,0 +1,78 @@
+pokemon-colorscripts -r 1-3 --no-title
+#Disable beep if on tty
+if [[ -n "$DISPLAY" ]]; then
+else
+	setterm -blength 0
+fi
+
+#For zsh-autosuggestions
+HISTFILE=~/.zsh_history
+HISTSIZE=10000
+SAVEHIST=10000
+
+#Plugin Manager
+source $HOME/antigen.zsh
+
+#Some exports for something which I dont remember
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_DATA_HOME="$XDG_CONFIG_HOME/local/share"
+export XDG_CACHE_HOME="$XDG_CONFIG_HOME/cache"
+
+#The holy path
+export PATH="$HOME/bin:/usr/local/bin:/usr/bin:/usr/sbin:/bin:/$HOME/.local/bin:$HOME/mybin:/home/madhavpcm/.config/local/share/gem/ruby/3.0.0/bin:/home/madhavpcm/.cargo/bin:$PATH"
+export PATH="/usr/local/qt515android/bin:$HOME/.config/local/share/nvim/mason/bin:$PATH"
+
+
+#Zoxide and z
+eval "$(zoxide init zsh)"
+
+#Vi Bindings for zsh
+bindkey -v
+
+#Mangohud
+MANGOHUD_CONFIGFILE="~/.config/mangohud/mangohud.conf"
+
+#Qt Theme
+export QT_QPA_PLATFORMTHEME=qt5ct
+
+#Default editor for git and crap
+export EDITOR="nvim"
+export VISUAL="nvim"
+
+#vi edit
+autoload -Uz edit-command-line
+zle -N edit-command-line
+bindkey -M vicmd v edit-command-line
+
+#Theme  To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+autoload -Uz bracketed-paste-magic
+zle -N bracketed-paste bracketed-paste-magic
+
+
+#Forgot
+zstyle ':bracketed-paste-magic' active-widgets '.self-*'
+
+#Wayland geng only
+export _JAVA_AWT_WM_NONREPARENTING=1
+export BINDGEN_EXTRA_CLANG_ARGS="$BINDGEN_EXTRA_CLANG_ARGS -DPW_ENABLE_DEPRECATED"
+#export QT_LOGGING_RULES="qt.qpa.*=true"
+#export WAYLAND_DEBUG=1
+export MOZ_ENABLE_WAYLAND=1
+
+export WLR_RENDERER=vulkan
+export WLR_EGL_NO_MODIFIERS=1
+export REXPL_HOME=$HOME/Dev/rexplc
+# autoSuggestions config
+
+setopt hist_ignore_all_dups # remove older duplicate entries from history
+setopt hist_reduce_blanks # remove superfluous blanks from history items
+setopt inc_append_history # save history entries as soon as they are entered
+
+# auto complete options
+setopt auto_list # automatically list choices on ambiguous completion
+setopt auto_menu # automatically use menu completion
+zstyle ':completion:*' menu select # select completions with arrow keys
+zstyle ':completion:*' group-name "" # group results by category
+zstyle ':completion:::::' completer _expand _complete _ignored _approximate # enable approximate matches for completion

@@ -9,7 +9,6 @@ in {
       "modules/common/host-spec.nix"
       "modules/home-manager"
     ])
-    ./${platform}.nix
     ./zsh
     ./bash.nix
     ./bat.nix
@@ -137,7 +136,7 @@ in {
       pre-commit # git hooks
       p7zip # compression & encryption
       ripgrep # better grep
-      steam-run # for running non-NixOS-packaged binaries on Nix
+      steam-run # for running non-NixOS-packaged binaries on Nixisdarwin
       usbutils tree # cli dir tree viewer
       unzip # zip extraction
       unrar # rar extraction

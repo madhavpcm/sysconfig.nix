@@ -9,7 +9,7 @@ in {
     inputs.home-manager.${platformModules}.home-manager
 
     (map lib.custom.relativeToRoot [
-      "hosts/common/core/${platform}.nix"
+      #"hosts/common/core/${platform}.nix"
       #"hosts/common/core/services" #not used yet
       "hosts/common/users/god/"
       "hosts/common/users/god/${platform}.nix"
