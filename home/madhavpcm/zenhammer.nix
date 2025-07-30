@@ -7,6 +7,7 @@
     common/opt/comms
     common/opt/gaming
     common/opt/media
+    common/opt/sops.nix
 
     common/opt/xdg.nix # file associations
   ];
