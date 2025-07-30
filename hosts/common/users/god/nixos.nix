@@ -36,7 +36,7 @@ in {
 
   # Setup p10k.zsh for root
   home-manager.users.root = lib.optionalAttrs (!hostSpec.isMinimal) {
-    home.stateVersion = "23.05"; # Avoid error
+    home.stateVersion = "25.05"; # Avoid error
     programs.zsh = {
       enable = true;
       plugins = [{
