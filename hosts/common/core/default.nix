@@ -10,8 +10,9 @@ in {
     inputs.sops-nix.${platformModules}.sops
 
     (map lib.custom.relativeToRoot [
-      #"hosts/common/core/${platform}.nix"
+      "hosts/common/core/${platform}.nix"
       #"hosts/common/core/services" #not used yet
+      "hosts/common/core/sops.nix"
       "hosts/common/users/god/"
       "hosts/common/users/god/${platform}.nix"
       "modules/common/"
