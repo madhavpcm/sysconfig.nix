@@ -64,8 +64,6 @@
     # program specific exclusions
     #targets.foo.enable = false;
   };
-  environment.systemPackages = with pkgs;
-    import ./sys-packages.nix { inherit pkgs; };
 
   networking = {
     hostName = "zenhammer"; # Define your hostname.

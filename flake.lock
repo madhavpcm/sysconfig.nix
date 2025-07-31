@@ -319,6 +319,24 @@
         "type": "github"
       }
     },
+    "nix-secrets": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1753943105,
+        "narHash": "sha256-nsAmY733qD07E03hiIKuduFPysKnNs0tENksrPJjiUo=",
+        "ref": "main",
+        "rev": "c8a9bb4026aec6e865cfda9c61dd8ebc702e7e58",
+        "shallow": true,
+        "type": "git",
+        "url": "ssh://git@github.com/madhavpcm/nix-sops.git"
+      },
+      "original": {
+        "ref": "main",
+        "shallow": true,
+        "type": "git",
+        "url": "ssh://git@github.com/madhavpcm/nix-sops.git"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1753345091,
@@ -518,6 +536,7 @@
         "disko": "disko",
         "hardware": "hardware",
         "home-manager": "home-manager",
+        "nix-secrets": "nix-secrets",
         "nixpkgs": "nixpkgs",
         "nixpkgs-stable": "nixpkgs-stable",
         "nixpkgs-unstable": "nixpkgs-unstable",
