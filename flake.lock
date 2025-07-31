@@ -322,10 +322,10 @@
     "nix-secrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1753943105,
-        "narHash": "sha256-nsAmY733qD07E03hiIKuduFPysKnNs0tENksrPJjiUo=",
+        "lastModified": 1753966458,
+        "narHash": "sha256-PG5EEews0VHhD0DSm4QMrp1S9+RiOksxTT4SWu9WcKU=",
         "ref": "main",
-        "rev": "c8a9bb4026aec6e865cfda9c61dd8ebc702e7e58",
+        "rev": "63c69fbc96cccdd5be6bd30f1b3ff60b5f5d5224",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/madhavpcm/nix-sops.git"
