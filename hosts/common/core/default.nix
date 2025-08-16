@@ -6,8 +6,8 @@ let
   platformModules = "${platform}Modules";
 in {
   imports = lib.flatten [
-    home-manager.${platformModules}.home-manager
-    sops-nix.${platformModules}.sops
+    inputs.home-manager.${platformModules}.home-manager
+    inputs.sops-nix.${platformModules}.sops
 
     (map lib.custom.relativeToRoot [
       "hosts/common/core/${platform}.nix"
