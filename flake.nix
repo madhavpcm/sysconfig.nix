@@ -69,11 +69,11 @@
       # Overlays: modifications/overrides to upstream packages
       overlays = import ./overlays { inherit inputs; };
       homeConfigurations = {
-         "madhavpcm@zenhammer" = lib.homeManagerConfiguration {
+         "madhavpcm@zenhammer" = home-manager.lib.homeManagerConfiguration {
            modules = [ ./home/madhavpcm/zenhammer.nix ];
-           pkgs = pkgsFor.x86_64-linux;
+           pkgs = nixpkgs.legacyPackages.x86_64-linux;
            extraSpecialArgs = {inherit inputs outputs;};
-         }
+         };
       };
 
       ## Packages: expose packages externally
