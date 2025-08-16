@@ -1,11 +1,11 @@
 # Development utilities I want across all systems
-{ config, lib, pkgs, ... }:
+{ config, customLib, pkgs, ... }:
 let
   publicGitEmail = config.hostSpec.email.gitHub;
   privateGitConfig =
     "${config.home.homeDirectory}/.config/git/gitconfig.private";
 in {
-  imports = lib.custom.scanPaths ./.;
+  imports = customLib.scanPaths ./.;
 
   home.packages = lib.flatten [
     (builtins.attrValues {

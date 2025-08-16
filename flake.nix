@@ -62,6 +62,7 @@
       # Extend lib file for custom parsing
       lib = nixpkgs.lib.extend
         (self: super: { custom = import ./lib { inherit (nixpkgs) lib; }; });
+      customLib = import ./lib { inherit (nixpkgs) lib; };
 
       # Architectures
       forAllSystems = nixpkgs.lib.genAttrs [ "x86_64-linux" ];
@@ -72,7 +73,10 @@
          "madhavpcm@zenhammer" = home-manager.lib.homeManagerConfiguration {
            modules = [ ./home/madhavpcm/zenhammer.nix ];
            pkgs = nixpkgs.legacyPackages.x86_64-linux;
-           extraSpecialArgs = {inherit inputs outputs;};
+           extraSpecialArgs = {
+             inherit inputs outputs customLib;
+             lib = lib.extend (_: _: { inherit (home-manager) lib; });
+           };
          };
       };
 
