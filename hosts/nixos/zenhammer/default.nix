@@ -25,6 +25,8 @@
       "hosts/common/opt/vpn.nix" # vpn
       "hosts/common/opt/vlc.nix" # media player
       "hosts/common/opt/wayland-tools.nix" # wayland components and pkgs not available in home-manager
+      # "hosts/common/opt/tailscale.nix" # wrieguard
+      "hosts/common/opt/wireguard.nix" # wrieguard
     ])
   ];
   hostSpec = {
@@ -69,12 +71,13 @@
     hostName = "zenhammer"; # Define your hostname.
     networkmanager.enable = true;
     firewall.enable = true;
+    firewall.allowedTCPPorts = [ 80 443 22 ];
   };
 
   time.timeZone = "Asia/Kolkata";
 
   services = {
-    openssh.enable = false;
+    openssh.enable = true;
     printing.enable = true;
     pipewire = {
       enable = true;

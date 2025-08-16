@@ -18,6 +18,7 @@
     playerctl
     # pamixer
     helvum
+    neovim
     pavucontrol
   ];
 }

@@ -1,75 +1,63 @@
-# git is core no matter what but additional settings may could be added made in optional/foo   eg: development.nix
-{ pkgs, lib, config, inputs, ... }: {
-  programs.git = {
+{
+  programs.kitty = {
     enable = true;
-    package = pkgs.gitAndTools.gitFull;
+    shellIntegration.enableZshIntegration = true;
 
-    ignores = [
-      ".csvignore"
-      # nix
-      "*.drv"
-      "result"
-      # python
-      "*.py?"
-      "__pycache__/"
-      ".venv/"
-      # direnv
-      ".direnv"
-    ];
-
-    # Anytime I use auth, I want to use my yubikey. But I don't want to always be having to touch it
-    # for things that don't need it. So I have to hardcode repos that require auth, and default to ssh for
-    # actions that require auth.
-    extraConfig = let
-      insteadOfList = domain: urls:
-        lib.map (url: {
-          "ssh://git@${domain}/${url}" = {
-            insteadOf = "https://${domain}/${url}";
-          };
-        }) urls;
-
-      # FIXME(git): At the moment this requires personal and work sets to maintain lists of git servers, even if
-      # unneeded, so could also check if domain list actually exists in the set first.
-    in {
-      core.pager = "delta";
-      delta = {
-        enable = true;
-        features = [
-          "side-by-side"
-          "line-numbers"
-          "hyperlinks"
-          "line-numbers"
-          "commit-decoration"
-        ];
-      };
-
-      # pre-emptively ignore mac crap
-      core.excludeFiles = builtins.toFile "global-gitignore" ''
-        .DS_Store
-        .DS_Store?
-        ._*
-        .Spotlight-V100
-        .Trashes
-        ehthumbs.db
-        Thumbs.db
-        node_modules
-      '';
-      core.attributesfile = builtins.toFile "global-gitattributes" ''
-        Cargo.lock -diff
-        flake.lock -diff
-        *.drawio -diff
-        *.svg -diff
-        *.json diff=json
-        *.bin diff=hex difftool=hex
-        *.dat diff=hex difftool=hex
-        *aarch64.bin diff=objdump-aarch64 difftool=objdump-aarch64
-        *arm.bin diff=objdump-arm difftool=objdump-arm
-        *x64.bin diff=objdump-x86_64 difftool=objdump-x64
-        *x86.bin diff=objdump-x86 difftool=objdump-x86
-      '';
-      # Makes single line json diffs easier to read
-      diff.json.textconv = "jq --sort-keys .";
+    font = {
+    	package = "";
+      name = "notosansmono";
+      size = 9;
     };
-  };
 
+    settings = {
+      scrollback_lines = 10000;
+    };
+    keybindings = {
+      "ctrl+c" = "copy_or_interrupt";
+      #      "ctrl+v" = "paste_from_clipboard"; #interferes with visual block mode in vim
+    };
+    #theme = "";
+
+    extraConfig = ''
+            #: Cursor customization {{{
+
+      #      cursor #c66e02
+
+            #: Default cursor color
+
+      #      cursor_text_color #282828
+
+            #: Choose the color of text under the cursor. If you want it rendered
+            #: with the background color of the cell underneath instead, use the
+            #: special keyword: background
+
+            cursor_shape block
+
+            #: The cursor shape can be one of (block, beam, underline). Note that
+            #: when reloading the config this will be changed only if the cursor
+            #: shape has not been set by the program running in the terminal.
+
+            cursor_beam_thickness 1.5
+
+            #: Defines the thickness of the beam cursor (in pts)
+
+            cursor_underline_thickness 2.0
+
+            #: Defines the thickness of the underline cursor (in pts)
+
+            cursor_blink_interval -1
+
+            #: The interval (in seconds) at which to blink the cursor. Set to zero
+            #: to disable blinking. Negative values mean use system default. Note
+            #: that numbers smaller than repaint_delay will be limited to
+            #: repaint_delay.
+
+            cursor_stop_blinking_after 15.0
+
+            #: Stop blinking cursor after the specified number of seconds of
+            #: keyboard inactivity.  Set to zero to never stop blinking.
+
+            #: }}}
+    '';
+  };
 }
