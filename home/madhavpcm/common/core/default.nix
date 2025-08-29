@@ -9,12 +9,13 @@ in
       "modules/home-manager"
     ])
     ./zsh
+    ./kitty
+
     ./bash.nix
     ./bat.nix
     ./direnv.nix
     ./fonts.nix
     ./git.nix
-    ./kitty.nix
     ./screen.nix
     ./zoxide.nix
   ];
