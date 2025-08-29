@@ -23,7 +23,7 @@ in {
   #
   # ========== Core Host Specifications ==========
   #
-  config.hostSpec = {
+  hostSpec = {
     username = "madhavpcm";
     handle = "madhavpcm";
     domain = "";

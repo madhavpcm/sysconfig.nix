@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ hostSpec, pkgs, lib, ... }:
 let
   devDirectory = "~/Dev";
   devNix = "${devDirectory}/nix";
@@ -25,7 +25,7 @@ in {
         src = "${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/";
         file = "powerlevel10k.zsh-theme";
       }
-    ] ++ lib.optionals (config.hostSpec.hostName != "iso") [
+    ] ++ lib.optionals (hostSpec.hostName != "iso") [
       {
         name = "zsh-term-title";
         src = "${pkgs.zsh-term-title}/share/zsh/zsh-term-title/";

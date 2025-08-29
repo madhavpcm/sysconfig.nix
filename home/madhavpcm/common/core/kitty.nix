@@ -3,12 +3,6 @@
     enable = true;
     shellIntegration.enableZshIntegration = true;
 
-    font = {
-    	package = "";
-      name = "notosansmono";
-      size = 9;
-    };
-
     settings = {
       scrollback_lines = 10000;
     };

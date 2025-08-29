@@ -98,6 +98,7 @@
         };
       }) (builtins.attrNames (builtins.readDir ./hosts/nixos)));
 
+      foo = builtins.trace "Config: ${self.nixosConfigurations.zenhammer.config.hostSpec}" ;
       homeConfigurations = {
          "madhavpcm@zenhammer" = home-manager.lib.homeManagerConfiguration {
            modules = [ ./home/madhavpcm/zenhammer.nix ./modules/common/host-spec.nix ];

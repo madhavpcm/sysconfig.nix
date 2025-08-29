@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, hostSpec, ... }:
 let
   devDirectory = "~/src";
   devNix = "${devDirectory}/nix";
@@ -29,7 +29,7 @@ in {
     ]
     # The iso doesn't use our overlays, so don't add custom packagesa
     #FIXME:move these to an optional custom plugins module and remove iso check
-      ++ lib.optionals (config.hostSpec.hostName != "iso") [
+      ++ lib.optionals (hostSpec.hostName != "iso") [
         {
           name = "zsh-term-title";
           src = "${pkgs.zsh-term-title}/share/zsh/zsh-term-title/";
