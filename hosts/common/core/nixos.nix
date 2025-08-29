@@ -18,6 +18,7 @@
   # ========== Nix Helper ==========
   #
   # Provide better build output and will also handle garbage collection in place of standard nix gc (garbace collection)
+  environment.etc.hosts.mode = "0644";
   programs.nh = {
     enable = true;
     clean.enable = true;

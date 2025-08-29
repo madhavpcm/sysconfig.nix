@@ -1,11 +1,11 @@
 # FIXME: Move attrs that will only work on linux to nixos.nix
 #FIXME: if pulling in homemanager for isMinimal maybe set up conditional for some packages
-{  config, lib, customLib, pkgs, hostSpec, ... }:
+{   lib,  pkgs,  hostSpec, ... }:
 #let platform = if hostSpec.isDarwin then "darwin" else "nixos";
 let platform = "nixos";
 in {
   imports = lib.flatten [
-    (map customLib.relativeToRoot [
+    (map lib.custom.relativeToRoot [
       "modules/common/host-spec.nix"
       "modules/home-manager"
     ])
@@ -20,13 +20,11 @@ in {
     ./zoxide.nix
   ];
 
-  inherit hostSpec;
-
   services.ssh-agent.enable = true;
 
   home = {
-    username = lib.mkDefault config.hostSpec.username;
-    homeDirectory = lib.mkDefault config.hostSpec.home;
+    username = lib.mkDefault hostSpec.username;
+    homeDirectory = lib.mkDefault hostSpec.home;
     stateVersion = lib.mkDefault "25.05";
     sessionPath = [ "$HOME/.local/bin" "$HOME/scripts/talon_scripts" ];
     sessionVariables = {
@@ -48,12 +46,12 @@ in {
     userDirs = {
       enable = true;
       createDirectories = true;
-      desktop = "${config.home.homeDirectory}/.desktop";
-      documents = "${config.home.homeDirectory}/docs";
-      download = "${config.home.homeDirectory}/downloads";
-      music = "${config.home.homeDirectory}/media/audio";
-      pictures = "${config.home.homeDirectory}/media/images";
-      videos = "${config.home.homeDirectory}/media/video";
+      desktop = "${hostSpec.home}/.desktop";
+      documents = "${hostSpec.home}/docs";
+      download = "${hostSpec.home}/downloads";
+      music = "${hostSpec.home}/media/audio";
+      pictures = "${hostSpec.home}/media/images";
+      videos = "${hostSpec.home}/media/video";
       # publicshare = "/var/empty"; #using this option with null or "/var/empty" barfs so it is set properly in extraConfig below
       # templates = "/var/empty"; #using this option with null or "/var/empty" barfs so it is set properly in extraConfig below
 
@@ -127,6 +125,7 @@ in {
       jq # json pretty printer and manipulator
       nix-tree # nix package tree viewer
       neofetch # fancier system info than pfetch
+      neovim # 
       ncdu # TUI disk usage
       pciutils pfetch # system info
       pre-commit # git hooks
@@ -138,6 +137,7 @@ in {
       unrar # rar extraction
       wev # show wayland events. also handy for detecting keypress codes
       wget # downloader
+      wl-clipboard
       xdg-utils # provide cli tools such as `xdg-mime` and `xdg-open`
       xdg-user-dirs yq-go # yaml pretty printer and manipulator
       zip # zip compression

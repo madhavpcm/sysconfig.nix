@@ -69,16 +69,6 @@
     in {
       # Overlays: modifications/overrides to upstream packages
       overlays = import ./overlays { inherit inputs; };
-      homeConfigurations = {
-         "madhavpcm@zenhammer" = home-manager.lib.homeManagerConfiguration {
-           modules = [ ./home/madhavpcm/zenhammer.nix ];
-           pkgs = nixpkgs.legacyPackages.x86_64-linux;
-           extraSpecialArgs = {
-             inherit inputs outputs customLib;
-             lib = lib.extend (_: _: { inherit (home-manager) lib; });
-           };
-         };
-      };
 
       ## Packages: expose packages externally
       #packages = forAllSystems (system:
@@ -107,6 +97,19 @@
           modules = [ ./hosts/nixos/${host} ];
         };
       }) (builtins.attrNames (builtins.readDir ./hosts/nixos)));
+
+      homeConfigurations = {
+         "madhavpcm@zenhammer" = home-manager.lib.homeManagerConfiguration {
+           modules = [ ./home/madhavpcm/zenhammer.nix ./modules/common/host-spec.nix ];
+           pkgs = nixpkgs.legacyPackages.x86_64-linux;
+           extraSpecialArgs = {
+             inherit inputs;
+             outputs = self.outputs;
+             lib = lib.extend (_: _: inputs.home-manager.lib );
+             hostSpec = self.nixosConfigurations.zenhammer.config.hostSpec;
+           };
+         };
+      };
 
       # DevShell: Custom shell for bootstrapping on new hosts, modifying nix-config, and secrets management
       devShells = forAllSystems (system:

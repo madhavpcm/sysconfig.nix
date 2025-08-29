@@ -10,6 +10,7 @@ in {
     inputs.sops-nix.${platformModules}.sops
 
     (map lib.custom.relativeToRoot [
+      "modules/common/host-spec.nix"
       "hosts/common/core/${platform}.nix"
       #"hosts/common/core/services" #not used yet
       "hosts/common/core/sops.nix"
@@ -22,11 +23,11 @@ in {
   #
   # ========== Core Host Specifications ==========
   #
-  hostSpec = {
+  config.hostSpec = {
     username = "madhavpcm";
     handle = "madhavpcm";
     domain = "";
-    email = "dpmadhav@hotmail.com";
+    email = { gitHub= "dpmadhav@hotmail.com"; };
     userFullName = "Madhav Prabhu";
   };
 

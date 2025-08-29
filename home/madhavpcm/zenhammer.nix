@@ -1,4 +1,5 @@
-{ pkgs, lib, ... }: {
+{ lib, hostSpec, ... }: 
+{
   imports = [
     common/core
 
@@ -12,6 +13,10 @@
     common/opt/xdg.nix # file associations
   ];
 
+  home.activation.debugHostSpec = lib.hm.dag.entryAfter ["writeBoundary"] ''
+    mkdir -p ${hostSpec.home}
+    echo '${builtins.toJSON hostSpec}' > ${hostSpec.home}/hostSpec-debug.json
+  '';
   #  ------ 
   # | DP-1 |
   #  ------ 
