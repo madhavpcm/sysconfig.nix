@@ -26,18 +26,6 @@ in {
         file = "powerlevel10k.zsh-theme";
       }
     ] ++ lib.optionals (hostSpec.hostName != "iso") [
-      {
-        name = "zsh-term-title";
-        src = "${pkgs.zsh-term-title}/share/zsh/zsh-term-title/";
-      }
-      {
-        name = "cd-gitroot";
-        src = "${pkgs.cd-gitroot}/share/zsh/cd-gitroot";
-      }
-      {
-        name = "zhooks";
-        src = "${pkgs.zhooks}/share/zsh/zhooks";
-      }
     ];
 
     initContent = lib.mkMerge [

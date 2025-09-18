@@ -1,7 +1,8 @@
 # Development utilities I want across all systems
 { config, lib,  pkgs, ... }:
 let
-  publicGitEmail = config.hostSpec.email.gitHub;
+  hostSpec = config.hostSpec;
+  publicGitEmail = hostSpec.email.gitHub;
   privateGitConfig =
     "${config.home.homeDirectory}/.config/git/gitconfig.private";
 in {

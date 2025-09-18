@@ -35,6 +35,8 @@
         bats # for bash testing
         age # for bootstrap script
         ssh-to-age # for bootstrap script
+        wl-clipboard
+        ripgrep
         ;
     };
   };

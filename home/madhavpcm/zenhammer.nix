@@ -1,4 +1,4 @@
-{ lib, hostSpec, ... }: 
+{ pkgs, lib, hostSpec, ... }: 
 {
   imports = [
     common/core

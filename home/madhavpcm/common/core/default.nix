@@ -20,6 +20,11 @@ in
     ./zoxide.nix
   ];
 
+  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
+    "discord"
+    "steam"
+  ];
+
   services.ssh-agent.enable = true;
 
   home = {

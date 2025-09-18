@@ -55,7 +55,7 @@
 
   };
 
-  outputs = { self, nixpkgs, home-manager, sops-nix, ... }@inputs:
+  outputs = { self, nixpkgs, nixpkgs-stable, nixpkgs-unstable, home-manager, sops-nix, ... }@inputs:
     let
       inherit (self) outputs;
 
@@ -66,6 +66,25 @@
 
       # Architectures
       forAllSystems = nixpkgs.lib.genAttrs [ "x86_64-linux" ];
+
+      # helper: pick pkgs for a given system
+      pkgsFor = system: {
+        default = import nixpkgs { 
+          inherit system; 
+          overlays = [ self.overlays.default ];
+          config.allowUnfree = true;
+        };
+        stable = import nixpkgs-stable { 
+          inherit system; 
+          overlays = [ self.overlays.default ];
+          config.allowUnfree = true;
+        };
+        unstable = import nixpkgs-unstable { 
+          inherit system; 
+          overlays = [ self.overlays.default ];
+          config.allowUnfree = true;
+        };
+      };
     in {
       # Overlays: modifications/overrides to upstream packages
       overlays = import ./overlays { inherit inputs; };
@@ -99,15 +118,29 @@
       }) (builtins.attrNames (builtins.readDir ./hosts/nixos)));
 
       foo = builtins.trace "Config: ${self.nixosConfigurations.zenhammer.config.hostSpec}" ;
-      homeConfigurations = {
+      homeConfigurations = 
+        let
+          system = "x86_64-linux";
+          pkgs-sets = pkgsFor system;
+        in {
          "madhavpcm@zenhammer" = home-manager.lib.homeManagerConfiguration {
-           modules = [ ./home/madhavpcm/zenhammer.nix ./modules/common/host-spec.nix ];
-           pkgs = nixpkgs.legacyPackages.x86_64-linux;
+           modules = [ 
+             ./home/madhavpcm/zenhammer.nix 
+             ./modules/common/host-spec.nix 
+             # Configure nixpkgs for Home Manager
+             {
+               nixpkgs.config.allowUnfree = true;
+             }
+           ];
+           pkgs = pkgs-sets.default;
            extraSpecialArgs = {
              inherit inputs;
              outputs = self.outputs;
              lib = lib.extend (_: _: inputs.home-manager.lib );
              hostSpec = self.nixosConfigurations.zenhammer.config.hostSpec;
+             # Make stable and unstable packages available
+             pkgs-stable = pkgs-sets.stable;
+             pkgs-unstable = pkgs-sets.unstable;
            };
          };
       };
@@ -121,4 +154,3 @@
 
     };
 }
-
