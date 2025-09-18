@@ -17,7 +17,11 @@ Create a sops directory in the following manner
 This file contains the directives to encrypt and decrypt secrets. We specify users and hosts' keys which can unlock the secrets.
 If install was successful, then there should be a private key in `~/.config/sops/age/keys.txt`, which will be used by default to decrypt.
 
-Since we already added that key and hosts to our password manager, on first install, use this hosts' key from our safe location, place it in appropriate location to decrypt.
+Since we already added that key and hosts key to our password manager, on first install, use one of those and, place it in appropriate location to decrypt.
+
+Or when creating a new host, use the newly generated keys found /etc/ssh/. Ensure that ssh server nix pkg is installed (forgot).
+
+#FIXME: update docs for sops while creating fresh install new host.
 
 ```yaml
 keys:
