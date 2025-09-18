@@ -1,4 +1,4 @@
-{ pkgs, lib, hostSpec, ... }: 
+{ pkgs, lib, hostSpec, config, nixosUsers, ... }: 
 {
   imports = [
     common/core

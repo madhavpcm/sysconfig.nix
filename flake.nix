@@ -141,6 +141,8 @@
              # Make stable and unstable packages available
              pkgs-stable = pkgs-sets.stable;
              pkgs-unstable = pkgs-sets.unstable;
+             # Pass user configuration from NixOS
+             nixosUsers = self.nixosConfigurations.zenhammer.config.users.users;
            };
          };
       };

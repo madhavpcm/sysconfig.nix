@@ -1,7 +1,6 @@
 # Development utilities I want across all systems
-{ config, lib,  pkgs, ... }:
+{ config, lib,  pkgs, hostSpec, ... }:
 let
-  hostSpec = config.hostSpec;
   publicGitEmail = hostSpec.email.gitHub;
   privateGitConfig =
     "${config.home.homeDirectory}/.config/git/gitconfig.private";
@@ -24,7 +23,7 @@ in {
 
   #NOTE: Already enabled earlier, this is just extra config
   programs.git = {
-    userName = config.hostSpec.handle;
+    userName = hostSpec.handle;
     userEmail = publicGitEmail;
     extraConfig = {
       log.showSignature = "true";
@@ -37,7 +36,7 @@ in {
 
   home.file."${privateGitConfig}".text = ''
     [user]
-      name = "${config.hostSpec.handle}"
+      name = "${hostSpec.handle}"
       email = ${publicGitEmail}
   '';
 }

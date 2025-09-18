@@ -15,6 +15,7 @@ in {
     home = "/home/${hostSpec.username}";
     isNormalUser = true;
     hashedPasswordFile = sopsHashedPasswordFile; # Blank if sops is not working.
+    group = "${hostSpec.username}";
 
     extraGroups = lib.flatten [
       "wheel"
