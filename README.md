@@ -107,6 +107,6 @@ There is no other user defined for now, but you can add more users by similar fa
 
 Use `./home/madhavpcm` as template to create your user at  `./home/<new_user>`
 
-Just like the hosts module, home-manager also uses core modules and optional modules. Use the existing user as refernece to create your user with customized packages given. You can create the user in different ways for different hosts, `home/madhavpcm/<new_host>.nix` would be the users config for `<new_host>`.
+Just like the hosts module, home-manager also uses core modules and optional modules. Use the existing user as refernece to create your user with customized packages given. You can change the configuration for the user in different ways for different hosts, `home/madhavpcm/<new_host>.nix` would be the users config for `<new_host>`.
 
 Install: `home-manager switch --flake .#new_user@new_host`
