@@ -15,25 +15,49 @@ in {
     history.share = true;
 
     plugins = [
+      # Your Powerlevel10k theme and config
       {
         name = "powerlevel10k-config";
-        src = ./p10k;
-        file = "p10k.zsh.theme";
+        src = ./p10k; # Assumes you have a ./p10k directory with your p10k.zsh
+        file = "p10k.config"; # The file to source, often .p10k.zsh or p10k.zsh
       }
       {
         name = "zsh-powerlevel10k";
-        src = "${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/";
-        file = "powerlevel10k.zsh-theme";
+        src = pkgs.zsh-powerlevel10k;
+        file = "share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
+      }
+
+      # Your other external plugins
+      {
+        name = "zsh-autosuggestions";
+        src = pkgs.zsh-autosuggestions;
+        file = "share/zsh-autosuggestions/zsh-autosuggestions.zsh";
+      }
+      {
+        name = "zsh-syntax-highlighting";
+        src = pkgs.zsh-syntax-highlighting;
+        file = "share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh";
+      }
+      {
+        name = "you-should-use";
+        src = pkgs.zsh-you-should-use;
+        file = "share/zsh-plugins/you-should-use/you-should-use.plugin.zsh";
       }
     ] ++ lib.optionals (hostSpec.hostName != "iso") [
+      # Conditionally add fzf history search
+      {
+        name = "zsh-fzf-history-search";
+        src = pkgs.zsh-fzf-history-search;
+        file = "share/zsh-fzf-history-search/zsh-fzf-history-search.plugin.zsh";
+      }
     ];
 
     initContent = lib.mkMerge [
       (lib.mkBefore ''
         # Enable Powerlevel10k instant prompt
-        if [[ -r "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh" ]]; then
-          source "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh"
-        fi
+               if [[ -r "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh" ]]; then
+               source "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh"
+               fi
       '')
       (lib.mkAfter (lib.readFile ./zshrc))
     ];
@@ -49,7 +73,7 @@ in {
     shellAliases = {
       cat = "bat --paging=never";
       diff = "batdiff";
-      rg = "batgrep";
+      grep = "batgrep";
       man = "batman";
 
       doc = "cd $HOME/documents";
@@ -59,11 +83,11 @@ in {
       edu = "cd $HOME/src/edu";
       wiki = "cd $HOME/sync/obsidian-vault-01/wiki";
       uc = "cd $HOME/src/unmoved-centre";
-      l = "eza -lah";
-      la = "eza -lah";
-      ll = "eza -lh";
-      ls = "eza";
-      lsa = "eza -lah";
+      l = "lsd -lah";
+      la = "lsd -lah";
+      ll = "lsd -lh";
+      ls = "lsd ";
+      lsa = "lsd -lah";
 
       cnc = "cd ${devNix}/nix-config";
       cns = "cd ${devNix}/nix-secrets";

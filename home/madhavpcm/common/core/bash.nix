@@ -147,10 +147,11 @@ in {
   home.packages = lib.optionals (hostSpec.hostName != "iso") (with pkgs; [
     bat
     eza
+    lsd
     starship
-    # batdiff, batgrep, batman are part of bat-extras
     bat-extras.batdiff
     bat-extras.batgrep  
     bat-extras.batman
+
   ]);
 }
