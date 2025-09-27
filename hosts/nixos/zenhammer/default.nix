@@ -76,7 +76,9 @@
 
   time.timeZone = "Asia/Kolkata";
 
+  environment.systemPackages = with pkgs; [ openrgb-with-all-plugins ];
   services = {
+    hardware.openrgb.enable = true;
     openssh.enable = true;
     printing.enable = true;
     pipewire = {
@@ -110,6 +112,8 @@
         			'';
     };
   };
+  # RGB controls
+
   hardware.graphics.enable = true;
   #hardware.graphics.package = lib.mkForce pkgs.unstable.mesa.drivers;
   hardware.amdgpu.initrd.enable = true; # load amdgpu kernelModules in stage 1.

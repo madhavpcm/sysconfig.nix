@@ -1,6 +1,6 @@
 { pkgs, ... }: {
   networking.wireguard.enable = true;
-  boot.kernelModules = [ "wireguard" ];
+  boot.kernelModules = [ "wireguard" "i2c-piix4" ];
   environment.systemPackages = with pkgs; [ wireguard-tools ];
 
   # enable NAT
