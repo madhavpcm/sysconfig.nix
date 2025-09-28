@@ -29,7 +29,8 @@ in {
       ])
     ];
   };
-  users.groups.${hostSpec.username} = {};
+  users.defaultUserShell = pkgs.zsh;
+  users.groups.${hostSpec.username} = { };
 
   # No matter what environment we are in we want these tools for root, and the user(s)
   programs.git.enable = true;
