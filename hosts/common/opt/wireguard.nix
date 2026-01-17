@@ -7,7 +7,10 @@
   networking.nat.enable = true;
   networking.nat.externalInterface = "enp16s0";
   networking.nat.internalInterfaces = [ "wg0" ];
-  networking.firewall = { allowedUDPPorts = [ 51820 ]; };
+  networking.firewall = {
+    allowedUDPPorts = [ 51820 52000 ];
+    allowedTCPPorts = [ 52000 ];
+  };
 
   networking.wireguard.interfaces = {
     # "wg0" is the network interface name. You can name the interface arbitrarily.
