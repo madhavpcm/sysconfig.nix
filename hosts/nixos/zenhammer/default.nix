@@ -77,9 +77,8 @@
   time.timeZone = "Asia/Kolkata";
 
   environment.systemPackages = with pkgs; [
-    openrgb-with-all-plugins,
-    v4l-utils,
-    v4l2loopback,
+    openrgb-with-all-plugins
+    v4l-utils
   ];
   services = {
     hardware.openrgb.enable = true;
