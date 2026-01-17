@@ -8,7 +8,7 @@
   networking.nat.externalInterface = "enp16s0";
   networking.nat.internalInterfaces = [ "wg0" ];
   networking.firewall = {
-    allowedUDPPorts = [ 51820 52000 ];
+    allowedUDPPorts = [ 51820 52000 8559 8554 ];
     allowedTCPPorts = [ 52000 ];
   };
 
