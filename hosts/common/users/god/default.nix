@@ -17,6 +17,7 @@ in {
     hashedPasswordFile = sopsHashedPasswordFile; # Blank if sops is not working.
 
     extraGroups = lib.flatten [
+      "libvirtd"
       "wheel"
       (ifTheyExist [
         "audio"

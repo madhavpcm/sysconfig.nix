@@ -8,7 +8,6 @@
   boot.initrd.kernelModules = [ "dm-snapshot" "cryptd" ];
   boot.kernelModules = [ "kvm-amd" "v4l2loopback" ];
   boot.extraModulePackages = [ config.boot.kernelPackages.v4l2loopback ];
-
   fileSystems."/" = {
     device = "/dev/disk/by-label/nixos-root";
     fsType = "ext4";

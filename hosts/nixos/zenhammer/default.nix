@@ -24,6 +24,7 @@
       "hosts/common/opt/hyprland.nix" # window manager
       "hosts/common/opt/vpn.nix" # vpn
       "hosts/common/opt/vlc.nix" # media player
+      "hosts/common/opt/virt.nix" # vritualization
       "hosts/common/opt/wayland-tools.nix" # wayland components and pkgs not available in home-manager
       # "hosts/common/opt/tailscale.nix" # wrieguard
       "hosts/common/opt/wireguard.nix" # wrieguard
@@ -72,6 +73,7 @@
     networkmanager.enable = true;
     firewall.enable = true;
     firewall.allowedTCPPorts = [ 80 443 22 ];
+    firewall.trustedInterfaces = [ "virbr0" ];
   };
 
   time.timeZone = "Asia/Kolkata";
