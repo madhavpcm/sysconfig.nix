@@ -17,9 +17,11 @@ in {
   ];
   #NOTE: Already enabled earlier, this is just extra config
   programs.git = {
-    userName = hostSpec.handle;
-    userEmail = publicGitEmail;
-    extraConfig = {
+    settings = {
+      user = {
+        email = publicGitEmail;
+        name = hostSpec.handle;
+      };
       log.showSignature = "true";
       init.defaultBranch = "main";
       pull.rebase = "true";

@@ -6,7 +6,7 @@ in {
   programs.zsh = {
     enable = true;
 
-    dotDir = ".config/zsh";
+    dotDir = "/home/${hostSpec.handle}/.config/zsh";
     enableCompletion = true;
     syntaxHighlighting.enable = true;
     autocd = true;
