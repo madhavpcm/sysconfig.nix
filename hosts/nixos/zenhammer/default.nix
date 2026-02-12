@@ -53,10 +53,9 @@
   };
 
   stylix = {
-    enable = true;
+    enable = false;
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-hard.yaml";
     #image = (lib.custom.relativeToRoot "assets/wallpapers/zen-01.png");
-    base16Scheme =
-      "${pkgs.base16-schemes}/share/themes/gruvbox-dark-medium.yaml";
     opacity = {
       applications = 1.0;
       terminal = 1.0;
@@ -92,15 +91,15 @@
     };
     libinput.enable = false; # Touchpad not needed in desktop
     flatpak = { enable = true; };
+    desktopManager = { gnome.enable = true; };
+    displayManager = {
+      gdm = {
+        enable = true;
+        wayland = true;
+      };
+    };
     xserver = {
       enable = true;
-      displayManager = {
-        gdm = {
-          enable = true;
-          wayland = true;
-        };
-      };
-      desktopManager.gnome.enable = true;
       excludePackages = with pkgs; [ xterm ];
     };
     udev = {
@@ -124,7 +123,6 @@
   hardware.amdgpu.initrd.enable = true; # load amdgpu kernelModules in stage 1.
   hardware.amdgpu.opencl.enable =
     true; # OpenCL support - general compute API for gpu
-  hardware.amdgpu.amdvlk.enable = true; # additional, alternative drivers
 
   users.users.madhavpcm = {
     isNormalUser = true;
@@ -146,7 +144,7 @@
   #  "nixpkgs=/nix/var/nix/profiles/per-user/root/channels/nixos"
   #  "/nix/var/nix/profiles/per-user/root/channels"
   #];
-  system.stateVersion = "25.05"; # Did you read the comment?
+  system.stateVersion = "25.11"; # Did you read the comment?
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
 }

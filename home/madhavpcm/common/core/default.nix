@@ -1,13 +1,9 @@
 { lib, pkgs, hostSpec, ... }:
 
-let
-  platform = "nixos";
-in
-{
+let platform = "nixos";
+in {
   imports = lib.flatten [
-    (map lib.custom.relativeToRoot [
-      "modules/home-manager"
-    ])
+    (map lib.custom.relativeToRoot [ "modules/home-manager" ])
     ./zsh
     ./kitty
 
@@ -20,17 +16,15 @@ in
     ./zoxide.nix
   ];
 
-  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
-    "discord"
-    "steam"
-  ];
+  nixpkgs.config.allowUnfreePredicate = pkg:
+    builtins.elem (lib.getName pkg) [ "discord" "steam" ];
 
   services.ssh-agent.enable = true;
 
   home = {
     username = lib.mkDefault hostSpec.username;
     homeDirectory = lib.mkDefault hostSpec.home;
-    stateVersion = lib.mkDefault "25.05";
+    stateVersion = lib.mkDefault "25.11";
     sessionPath = [ "$HOME/.local/bin" "$HOME/scripts/talon_scripts" ];
     sessionVariables = {
       FLAKE = "$HOME/src/nix/nix-config";
@@ -99,11 +93,10 @@ in
     '';
 
   in [ jq5 ] ++ builtins.attrValues {
-    inherit (pkgs) 
+    inherit (pkgs)
       copyq coreutils curl eza dust fd findutils fzf jq nix-tree neofetch ncdu
       pciutils pfetch pre-commit p7zip ripgrep steam-run usbutils tree unzip
-      unrar wev wget xdg-utils xdg-user-dirs yq-go zip
-    ;
+      unrar wev wget xdg-utils xdg-user-dirs yq-go zip;
   };
 
   nix = {
@@ -119,7 +112,7 @@ in
   systemd.user.startServices = "sd-switch";
 
   # Debug hostSpec
-  home.activation.debugHostSpec = lib.hm.dag.entryAfter ["writeBoundary"] ''
+  home.activation.debugHostSpec = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     mkdir -p ${hostSpec.home}
     echo '${builtins.toJSON hostSpec}' > ${hostSpec.home}/hostSpec-debug.json
   '';

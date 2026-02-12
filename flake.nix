@@ -2,9 +2,9 @@
   description = "sysconfig.nix configuration by madhavpcm";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-25.05";
+    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-25.11";
     # The next two are for pinning to stable vs unstable regardless of what the above is set to
     # This is particularly useful when an upcoming stable release is in beta because you can effectively
     # keep 'nixpkgs-stable' set to stable for critical packages while setting 'nixpkgs' to the beta branch to
@@ -15,7 +15,7 @@
 
     hardware.url = "github:nixos/nixos-hardware";
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.05";
+      url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -32,7 +32,7 @@
 
     # vim4LMFQR!
     nixvim = {
-      url = "github:nix-community/nixvim/nixos-25.05";
+      url = "github:nix-community/nixvim/nixos-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
       #url = "github:nix-community/nixvim";
       #inputs.nixpkgs.follows = "nixpkgs-unstable";
@@ -45,7 +45,7 @@
     };
 
     # Theming
-    stylix.url = "github:danth/stylix/release-25.05";
+    stylix.url = "github:danth/stylix/release-25.11";
     rose-pine-hyprcursor.url = "github:ndom91/rose-pine-hyprcursor";
     nix-secrets = {
       url =
@@ -55,7 +55,8 @@
 
   };
 
-  outputs = { self, nixpkgs, nixpkgs-stable, nixpkgs-unstable, home-manager, sops-nix, ... }@inputs:
+  outputs = { self, nixpkgs, nixpkgs-stable, nixpkgs-unstable, home-manager
+    , sops-nix, ... }@inputs:
     let
       inherit (self) outputs;
 
@@ -69,18 +70,18 @@
 
       # helper: pick pkgs for a given system
       pkgsFor = system: {
-        default = import nixpkgs { 
-          inherit system; 
+        default = import nixpkgs {
+          inherit system;
           overlays = [ self.overlays.default ];
           config.allowUnfree = true;
         };
-        stable = import nixpkgs-stable { 
-          inherit system; 
+        stable = import nixpkgs-stable {
+          inherit system;
           overlays = [ self.overlays.default ];
           config.allowUnfree = true;
         };
-        unstable = import nixpkgs-unstable { 
-          inherit system; 
+        unstable = import nixpkgs-unstable {
+          inherit system;
           overlays = [ self.overlays.default ];
           config.allowUnfree = true;
         };
@@ -117,34 +118,32 @@
         };
       }) (builtins.attrNames (builtins.readDir ./hosts/nixos)));
 
-      foo = builtins.trace "Config: ${self.nixosConfigurations.zenhammer.config.hostSpec}" ;
-      homeConfigurations = 
-        let
-          system = "x86_64-linux";
-          pkgs-sets = pkgsFor system;
-        in {
-         "madhavpcm@zenhammer" = home-manager.lib.homeManagerConfiguration {
-           modules = [ 
-             ./home/madhavpcm/zenhammer.nix 
-             ./modules/common/host-spec.nix 
-             # Configure nixpkgs for Home Manager
-             {
-               nixpkgs.config.allowUnfree = true;
-             }
-           ];
-           pkgs = pkgs-sets.default;
-           extraSpecialArgs = {
-             inherit inputs;
-             outputs = self.outputs;
-             lib = lib.extend (_: _: inputs.home-manager.lib );
-             hostSpec = self.nixosConfigurations.zenhammer.config.hostSpec;
-             # Make stable and unstable packages available
-             pkgs-stable = pkgs-sets.stable;
-             pkgs-unstable = pkgs-sets.unstable;
-             # Pass user configuration from NixOS
-             nixosUsers = self.nixosConfigurations.zenhammer.config.users.users;
-           };
-         };
+      foo = builtins.trace
+        "Config: ${self.nixosConfigurations.zenhammer.config.hostSpec}";
+      homeConfigurations = let
+        system = "x86_64-linux";
+        pkgs-sets = pkgsFor system;
+      in {
+        "madhavpcm@zenhammer" = home-manager.lib.homeManagerConfiguration {
+          modules = [
+            ./home/madhavpcm/zenhammer.nix
+            ./modules/common/host-spec.nix
+            # Configure nixpkgs for Home Manager
+            { nixpkgs.config.allowUnfree = true; }
+          ];
+          pkgs = pkgs-sets.default;
+          extraSpecialArgs = {
+            inherit inputs;
+            outputs = self.outputs;
+            lib = lib.extend (_: _: inputs.home-manager.lib);
+            hostSpec = self.nixosConfigurations.zenhammer.config.hostSpec;
+            # Make stable and unstable packages available
+            pkgs-stable = pkgs-sets.stable;
+            pkgs-unstable = pkgs-sets.unstable;
+            # Pass user configuration from NixOS
+            nixosUsers = self.nixosConfigurations.zenhammer.config.users.users;
+          };
+        };
       };
 
       # DevShell: Custom shell for bootstrapping on new hosts, modifying nix-config, and secrets management

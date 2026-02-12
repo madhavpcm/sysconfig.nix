@@ -2,7 +2,6 @@
 { pkgs, lib, config, inputs, ... }: {
   programs.git = {
     enable = true;
-    package = pkgs.gitAndTools.gitFull;
 
     ignores = [
       ".csvignore"
@@ -20,7 +19,7 @@
     # Anytime I use auth, I want to use my yubikey. But I don't want to always be having to touch it
     # for things that don't need it. So I have to hardcode repos that require auth, and default to ssh for
     # actions that require auth.
-    extraConfig = let
+    settings = let
       insteadOfList = domain: urls:
         lib.map (url: {
           "ssh://git@${domain}/${url}" = {
@@ -42,7 +41,10 @@
           "commit-decoration"
         ];
       };
-
+      user = {
+        email = "dpmadhav@hotmail.com";
+        name = "madhavpcm";
+      };
       # pre-emptively ignore mac crap
       core.excludeFiles = builtins.toFile "global-gitignore" ''
         .DS_Store
