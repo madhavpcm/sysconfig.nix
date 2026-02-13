@@ -118,7 +118,14 @@
   };
   # RGB controls
 
-  hardware.graphics.enable = true;
+  hardware.graphics = {
+    enable = true;
+    extraPackages = with pkgs; [
+      vulkan-loader
+      vulkan-tools
+      vulkan-validation-layers
+    ];
+  };
   #hardware.graphics.package = lib.mkForce pkgs.unstable.mesa.drivers;
   hardware.amdgpu.initrd.enable = true; # load amdgpu kernelModules in stage 1.
   hardware.amdgpu.opencl.enable =

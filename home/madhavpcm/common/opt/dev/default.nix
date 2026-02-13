@@ -8,11 +8,12 @@ in {
   imports = lib.custom.scanPaths ./.;
 
   home.packages = lib.flatten [
+    (pkgs.llama-cpp.override { vulkanSupport = true; })
     (builtins.attrValues {
       inherit (pkgs)
       # Development
-        direnv delta act yq-go ripgrep nixpkgs-review nmap difftastic screen
-        man-pages man-pages-posix gdb lldb;
+        shaderc direnv delta act yq-go ripgrep nixpkgs-review nmap difftastic
+        screen man-pages man-pages-posix gdb lldb;
     })
   ];
   #NOTE: Already enabled earlier, this is just extra config

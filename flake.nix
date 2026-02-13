@@ -29,6 +29,14 @@
       url = "https://flakehub.com/f/AshleyYakeley/NixVirt/*.tar.gz";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    llama-cpp = {
+      url = "github:ggml-org/llama.cpp";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    hf-nix = {
+      url = "github:huggingface/hf-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     # vim4LMFQR!
     nixvim = {

@@ -30,6 +30,6 @@ let
   '';
 in {
   home.packages = [ steam-session ]
-    ++ builtins.attrValues { inherit (pkgs.unstable) pcsx2; };
+    ++ builtins.attrValues { inherit (pkgs.unstable) pcsx2 ollama-rocm; };
 
 }
