@@ -73,6 +73,9 @@
     firewall.enable = true;
     firewall.allowedTCPPorts = [ 80 443 22 ];
     firewall.trustedInterfaces = [ "virbr0" ];
+    extraHosts = ''
+      192.168.10.50 kawaserver
+    '';
   };
 
   time.timeZone = "Asia/Kolkata";

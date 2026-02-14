@@ -12,8 +12,8 @@ in {
     (builtins.attrValues {
       inherit (pkgs)
       # Development
-        shaderc direnv delta act yq-go ripgrep nixpkgs-review nmap difftastic
-        screen man-pages man-pages-posix gdb lldb;
+        claude-code shaderc direnv delta act yq-go ripgrep nixpkgs-review nmap
+        difftastic screen man-pages man-pages-posix gdb lldb;
     })
   ];
   #NOTE: Already enabled earlier, this is just extra config
