@@ -85,6 +85,20 @@
     v4l-utils
   ];
   services = {
+    rsyslogd = {
+      enable = false;
+      extraConfig = ''
+        $ModLoad imudp
+        $UDPServerRun 514
+        $ModLoad imtcp
+        $InputTCPServerRun 514
+
+        # Log by hostname
+        $template RemoteLogs,"/var/log/remote/%HOSTNAME%/%PROGRAMNAME%.log"
+        *.* ?RemoteLogs
+        & ~
+      '';
+    };
     hardware.openrgb.enable = true;
     openssh.enable = true;
     printing.enable = true;

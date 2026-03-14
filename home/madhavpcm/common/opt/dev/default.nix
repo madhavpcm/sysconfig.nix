@@ -11,9 +11,8 @@ in {
     (pkgs.llama-cpp.override { vulkanSupport = true; })
     (builtins.attrValues {
       inherit (pkgs)
-      # Development
-        claude-code shaderc direnv delta act yq-go ripgrep nixpkgs-review nmap
-        difftastic screen man-pages man-pages-posix gdb lldb;
+        sshfs claude-code shaderc direnv delta act yq-go ripgrep nixpkgs-review
+        nmap difftastic screen man-pages man-pages-posix gdb lldb;
     })
   ];
   #NOTE: Already enabled earlier, this is just extra config
