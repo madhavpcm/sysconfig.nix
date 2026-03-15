@@ -105,6 +105,8 @@
     pipewire = {
       enable = true;
       pulse.enable = true;
+      alsa.enable = true;
+      alsa.support32Bit = true; # Essential for 32-bit audio support
     };
     libinput.enable = false; # Touchpad not needed in desktop
     flatpak = { enable = true; };
@@ -137,6 +139,7 @@
 
   hardware.graphics = {
     enable = true;
+    enable32Bit = true;
     extraPackages = with pkgs; [
       vulkan-loader
       vulkan-tools

@@ -1,5 +1,11 @@
 { pkgs, ... }: {
   hardware.xone.enable = true; # xbox controller
+  environment.systemPackages = with pkgs; [
+    # Choose one of the following:
+    wineWowPackages.stable # Recommended for most (32-bit & 64-bit)
+    wineWowPackages.staging # For latest features/wayland support
+    winetricks # Helper script for installing libraries
+  ];
 
   programs = {
     steam = {
