@@ -129,10 +129,15 @@ in {
       '';
     };
   };
-  xdg.mimeApps.defaultApplications = {
-    "text/html" = [ "firefox.desktop" ];
-    "text/xml" = [ "firefox.desktop" ];
-    "x-scheme-handler/http" = [ "firefox.desktop" ];
-    "x-scheme-handler/https" = [ "firefox.desktop" ];
+  xdg.mimeApps = {
+    enable = true;
+    defaultApplications = {
+      "text/html" = "zen-browser.desktop";
+      "text/xml" = "zen-browser.desktop";
+      "x-scheme-handler/http" = "zen-browser.desktop";
+      "x-scheme-handler/https" = "zen-browser.desktop";
+      "x-scheme-handler/about" = "zen-browser.desktop";
+      "x-scheme-handler/unknown" = "zen-browser.desktop";
+    };
   };
 }
