@@ -23,6 +23,7 @@ in {
         "audio"
         "video"
         "docker"
+        "podman"
         "git"
         "networkmanager"
         "scanner" # for print/scan"

@@ -59,12 +59,18 @@ in {
                source "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh"
                fi
       '')
-      (lib.mkAfter (lib.readFile ./zshrc))
+      (lib.mkAfter ''
+        # Load standard zshrc
+        ${lib.readFile ./zshrc}
+
+        # Load Kubernetes aliases
+        ${lib.readFile ./kubealiases}
+      '')
     ];
 
     oh-my-zsh = {
       enable = true;
-      plugins = [ "git" "sudo" ];
+      plugins = [ "git" "sudo" "kubectl" ];
       extraConfig = ''
         COMPLETION_WAITING_DOTS="true"
       '';

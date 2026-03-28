@@ -22,6 +22,7 @@
       "hosts/common/opt/audio.nix" # pipewire and cli controls
       "hosts/common/opt/gaming.nix" # steam, gamescope, gamemode, and related hardware
       "hosts/common/opt/hyprland.nix" # window manager
+      "hosts/common/opt/minikube.nix" # k8s
       "hosts/common/opt/vpn.nix" # vpn
       "hosts/common/opt/vlc.nix" # media player
       "hosts/common/opt/virt.nix" # vritualization
