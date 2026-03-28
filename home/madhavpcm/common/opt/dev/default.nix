@@ -11,9 +11,19 @@ in {
     (pkgs.llama-cpp.override { vulkanSupport = true; })
     (builtins.attrValues {
       inherit (pkgs)
-        python3 bun opencode sshfs claude-code shaderc direnv delta act yq-go
-        ripgrep nixpkgs-review nmap difftastic screen man-pages man-pages-posix
-        gdb lldb;
+      # essentials
+        delta direnv difftastic sshfs ripgrep screen man-pages nixpkgs-review
+        man-pages-posix
+        # C/CPP
+        gcc gnumake shaderc gdb lldb
+        # Py
+        python3 act nmap
+        # Js
+        bun nodejs_22
+        # Go
+        go
+        # Vibecode
+        opencode claude-code;
     })
   ];
 

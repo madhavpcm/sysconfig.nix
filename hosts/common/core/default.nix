@@ -27,14 +27,14 @@ in {
     username = "madhavpcm";
     handle = "madhavpcm";
     domain = "";
-    email = { gitHub= "dpmadhav@hotmail.com"; };
+    email = { gitHub = "dpmadhav@hotmail.com"; };
     userFullName = "Madhav Prabhu";
   };
 
   networking.hostName = config.hostSpec.hostName;
 
   # System-wide packages, in case we log in as root
-  environment.systemPackages = [ pkgs.openssh ];
+  environment.systemPackages = [ pkgs.openssh pkgs.nettools ];
 
   # Force home-manager to use global packages
   home-manager.useGlobalPkgs = true;

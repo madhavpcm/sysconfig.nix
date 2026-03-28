@@ -12,5 +12,5 @@
   users.users.${config.hostSpec.username}.extraGroups = [ "podman" ];
 
   # Install minikube and kubectl
-  environment.systemPackages = with pkgs; [ minikube kubectl ];
+  environment.systemPackages = with pkgs; [ minikube kubectl kubectx ];
 }
