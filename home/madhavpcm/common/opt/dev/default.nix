@@ -1,5 +1,5 @@
 # Development utilities I want across all systems
-{ config, lib, pkgs, hostSpec, ... }:
+{ config, lib, pkgs, hostSpec, antigravity, ... }:
 let
   publicGitEmail = hostSpec.email.gitHub;
   privateGitConfig =
@@ -14,6 +14,8 @@ in {
       # essentials
         delta direnv difftastic sshfs ripgrep screen man-pages nixpkgs-review
         man-pages-posix
+        # k8s
+        mirrord
         # C/CPP
         gcc gnumake shaderc gdb lldb
         # Py
@@ -21,9 +23,9 @@ in {
         # Js
         bun nodejs_22
         # Go
-        go
+        go delve
         # Vibecode
-        opencode claude-code;
+        opencode claude-code antigravity;
     })
   ];
 

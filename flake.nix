@@ -38,6 +38,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    antigravity-nix = {
+      url = "github:jacopone/antigravity-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # vim4LMFQR!
     nixvim = {
       url = "github:nix-community/nixvim/nixos-25.11";
@@ -150,6 +155,8 @@
             pkgs-unstable = pkgs-sets.unstable;
             # Pass user configuration from NixOS
             nixosUsers = self.nixosConfigurations.zenhammer.config.users.users;
+            # Make antigravity packages available
+            antigravity = inputs.antigravity-nix.packages.${system};
           };
         };
       };

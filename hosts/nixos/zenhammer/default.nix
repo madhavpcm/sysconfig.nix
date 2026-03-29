@@ -22,7 +22,7 @@
       "hosts/common/opt/audio.nix" # pipewire and cli controls
       "hosts/common/opt/gaming.nix" # steam, gamescope, gamemode, and related hardware
       "hosts/common/opt/hyprland.nix" # window manager
-      "hosts/common/opt/minikube.nix" # k8s
+      "hosts/common/opt/k8s.nix" # k8s
       "hosts/common/opt/vpn.nix" # vpn
       "hosts/common/opt/vlc.nix" # media player
       "hosts/common/opt/virt.nix" # vritualization
@@ -72,7 +72,7 @@
     hostName = "zenhammer"; # Define your hostname.
     networkmanager.enable = true;
     firewall.enable = true;
-    firewall.allowedTCPPorts = [ 80 443 22 ];
+    firewall.allowedTCPPorts = [ 80 443 22 6443 ];
     firewall.trustedInterfaces = [ "virbr0" ];
     extraHosts = ''
       192.168.10.50 kawaserver

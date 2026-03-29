@@ -132,12 +132,12 @@ in {
   xdg.mimeApps = {
     enable = true;
     defaultApplications = {
-      "text/html" = "zen-browser.desktop";
-      "text/xml" = "zen-browser.desktop";
-      "x-scheme-handler/http" = "zen-browser.desktop";
-      "x-scheme-handler/https" = "zen-browser.desktop";
-      "x-scheme-handler/about" = "zen-browser.desktop";
-      "x-scheme-handler/unknown" = "zen-browser.desktop";
+      "text/html" = "app.zen_browser.zen.desktop";
+      "text/xml" = "app.zen_browser.zen.desktop";
+      "x-scheme-handler/http" = "app.zen_browser.zen.desktop";
+      "x-scheme-handler/https" = "app.zen_browser.zen.desktop";
+      "x-scheme-handler/about" = "app.zen_browser.zen.desktop";
+      "x-scheme-handler/unknown" = "app.zen_browser.zen.desktop";
     };
   };
 }

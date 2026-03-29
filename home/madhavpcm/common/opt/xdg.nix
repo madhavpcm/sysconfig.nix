@@ -1,7 +1,7 @@
 { pkgs, ... }:
 let
   # FIXME(xdg): That should use config options and just reference whatever is configured as the default
-  browser = [ "zen-browser.desktop" ];
+  browser = [ "app.zen_browser.zen.desktop" ];
   editor = [ "nvim.desktop" ];
   media = [ "vlc.desktop" ];
   writer = [ "libreoffice-writer.desktop" ];
