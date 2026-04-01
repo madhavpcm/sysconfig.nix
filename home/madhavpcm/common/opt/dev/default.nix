@@ -11,7 +11,6 @@ in {
     (pkgs.llama-cpp.override { vulkanSupport = true; })
     (builtins.attrValues {
       inherit (pkgs)
-      # essentials
         delta direnv difftastic sshfs ripgrep screen man-pages nixpkgs-review
         man-pages-posix
         # k8s
@@ -23,10 +22,9 @@ in {
         # Js
         bun nodejs_22
         # Go
-        go delve
-        # Vibecode
-        opencode claude-code antigravity;
+        opencode claude-code go delve;
     })
+    (builtins.attrValues { inherit (antigravity) google-antigravity; })
   ];
 
   #NOTE: Already enabled earlier, this is just extra config

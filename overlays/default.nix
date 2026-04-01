@@ -20,6 +20,7 @@ let
       config.allowUnfree = true;
       #      overlays = [
       #     ];
+      overlays = [ inputs.antigravity-nix.overlays.default ];
     };
   };
 
