@@ -3,11 +3,20 @@
 {
   imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
-  boot.initrd.availableKernelModules =
-    [ "nvme" "xhci_pci" "ahci" "thunderbolt" "usbhid" "usb_storage" "sd_mod" ];
+  boot.initrd.availableKernelModules = [
+    "nvme"
+    "xhci_pci"
+    "ahci"
+    "thunderbolt"
+    "usbhid"
+    "usb_storage"
+    "sd_mod"
+    "r8169"
+  ];
   boot.initrd.kernelModules = [ "dm-snapshot" "cryptd" ];
   boot.kernelModules = [ "kvm-amd" "v4l2loopback" ];
   boot.extraModulePackages = [ config.boot.kernelPackages.v4l2loopback ];
+  boot.kernelParams = [ "pcie_aspm=off" "r8169.aspm=0" ];
   fileSystems."/" = {
     device = "/dev/disk/by-label/nixos-root";
     fsType = "ext4";

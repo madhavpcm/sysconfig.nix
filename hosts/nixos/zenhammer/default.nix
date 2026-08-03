@@ -75,7 +75,7 @@
     firewall.allowedTCPPorts = [ 80 443 22 6443 ];
     firewall.trustedInterfaces = [ "virbr0" ];
     extraHosts = ''
-      192.168.10.50 kawaserver
+      192.168.1.50 kawaserver
     '';
   };
 
