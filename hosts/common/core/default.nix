@@ -86,6 +86,13 @@ in {
   # ========== Basic Shell Enablement ==========
   #
   # On darwin it's important this is outside home-manager
+  programs.nix-ld.enable = true;
+  programs.nix-ld.libraries = with pkgs; [
+    stdenv.cc.cc
+    zlib
+    # Add other libraries here if the binary complains about missing .so files
+  ];
+
   programs.zsh = {
     enable = true;
     enableCompletion = true;

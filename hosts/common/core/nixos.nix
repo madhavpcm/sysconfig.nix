@@ -40,7 +40,7 @@
 
         ;; Definine two aliases, one for esc/control to other for function key
         (defalias
-          escctrl (tap-hold 100 100 esc lctl)
+          escctrl (tap-hold 50 50 esc lctl)
         )
 
         (deflayer base

@@ -26,6 +26,10 @@ eval "$(zoxide init zsh)"
 #Vi Bindings for zsh
 bindkey -v
 
+# Keep fzf history search on Ctrl+R (the fzf-history-search plugin binds it in
+# the emacs keymap, which vi mode shadows with "redisplay")
+bindkey -M viins '^r' fzf_history_search
+
 #Mangohud
 MANGOHUD_CONFIGFILE="~/.config/mangohud/mangohud.conf"
 
@@ -74,3 +78,4 @@ zstyle ':completion:::::' completer _expand _complete _ignored _approximate # en
 
 export PATH=$HOME/.local/lib/node_modules/.bin:$PATH
 export PATH="$HOME/.bun/bin:$PATH"
+export PATH="$HOME/.npm-global/bin:$PATH"

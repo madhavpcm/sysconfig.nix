@@ -30,18 +30,20 @@ in {
   ];
 
   #NOTE: Already enabled earlier, this is just extra config
-  programs.git = {
-    settings = {
-      user = {
-        email = publicGitEmail;
-        name = hostSpec.handle;
-      };
-      log.showSignature = "true";
-      init.defaultBranch = "main";
-      pull.rebase = "true";
+  programs = {
+    git = {
+      settings = {
+        user = {
+          email = publicGitEmail;
+          name = hostSpec.handle;
+        };
+        log.showSignature = "true";
+        init.defaultBranch = "main";
+        pull.rebase = "true";
 
+      };
+      ignores = [ ".direnv" "result" ];
     };
-    ignores = [ ".direnv" "result" ];
   };
 
   home.file."${privateGitConfig}".text = ''
