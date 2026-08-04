@@ -20,9 +20,11 @@ in {
         # Py
         python3 act nmap
         # Js
-        bun nodejs_22
+        bun nodejs_latest
         # Go
-        opencode claude-code go delve;
+        claude-code go delve
+        # containers
+        podman-compose;
     })
     (builtins.attrValues { inherit (antigravity) google-antigravity; })
   ];
